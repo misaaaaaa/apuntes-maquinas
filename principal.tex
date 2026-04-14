@@ -1,13 +1,22 @@
 \documentclass[10pt, openany]{book}
+
 \usepackage[paperwidth=148mm, paperheight=210mm, margin=1.5cm]{geometry}
-\usepackage{graphicx}
-\graphicspath{imagenes/}
-\usepackage[spanish]{babel}
+
 \usepackage[T1]{fontenc}
 \usepackage{noto}
+
+\usepackage{graphicx}
+\graphicspath{imagenes/}
+
 \usepackage{mwe}
 \usepackage{subfiles}
 \usepackage{parskip}
+
+% IMPORTANT: babel before tikz/pgfplots
+\usepackage[spanish, es-noshorthands]{babel}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
 \begin{document}
 
