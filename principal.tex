@@ -4,7 +4,8 @@
 \graphicspath{imagenes/}
 \usepackage[spanish]{babel}
 \usepackage{mwe}
-\usepackage{subfiles} 
+\usepackage{subfiles}
+\usepackage{parskip}
 
 \begin{document}
 
@@ -28,14 +29,19 @@
 
 \newpage
 
-\chapter{Acerca de}
+\chapter{Info}
 
-\subfile{secciones/autores}
+\subfile{info/autores}
+\subfile{info/cursos}
+\subfile{info/agradecimientos}
+\subfile{info/herramientas}
 
-\subfile{secciones/herramientas}
+\chapter{Electrónica}
 
+\subfile{electronica/resistores}
+\subfile{electronica/capacitores}
+\subfile{electronica/chip555}
 
-
-\section{apuntes-maquinas}
+\chapter{Computación}
 
 \end{document}
