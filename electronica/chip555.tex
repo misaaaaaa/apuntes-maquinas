@@ -11,19 +11,58 @@
 
 El chip 555 es un circuito integrado que se utiliza para generar señales de temporización.
 
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+  % cuerpo del chip
+  \node[draw, thick, minimum width=3cm, minimum height=5cm] (chip) at (0,0) {\rotatebox{-90}{\large 555}};
+  
+  % --- PINES IZQUIERDA ---
+  \foreach \y/\text in {
+    1.5/{01 GND},
+    0.5/{02 TRIG},
+   -0.5/{03 OUT},
+   -1.5/{04 RESET}
+  }{
+    % stub
+    \draw ($(chip.west)+(0,\y)$) -- ++(-0.4,0);
+    % label
+    \node[left] at ($(chip.west)+(-0.4,\y)$) {\text};
+  }
+
+  % --- PINES DERECHA ---
+  \foreach \y/\text in {
+    1.5/{08 VCC},
+    0.5/{07 DIS},
+   -0.5/{06 THR},
+   -1.5/{05 CTRL}
+  }{
+    % stub
+    \draw ($(chip.east)+(0,\y)$) -- ++(0.4,0);
+    % label
+    \node[right] at ($(chip.east)+(0.4,\y)$) {\text};
+  }
+
+  % --- INDICADOR PIN 1 (puntito) ---
+  \fill ($(chip.north west)+(0.3,-0.3)$) circle (2pt);
+
+\end{circuitikz}
+\caption{Integrado 555}
+\end{figure}
+
 \subsection{Patitas}
 
 El chip 555 tiene 8 patitas.
 
 \begin{itemize}
-    \item 01: GND
-    \item 02: Trigger
-    \item 03: Output
-    \item 04: Reset
-    \item 05: Control
-    \item 06: Threshold
-    \item 07: Discharge
-    \item 08: $V_{CC}$
+    \item 01: GND: tierra
+    \item 02: TRIG: gatillo
+    \item 03: OUT: salida
+    \item 04: RESET: resetea el circuito
+    \item 05: CTRL: control
+    \item 06: THR: umbral
+    \item 07: DIS: descarga
+    \item 08: VCC: voltaje de alimentación
 \end{itemize}
 
 \subsection{Circuito astable}
