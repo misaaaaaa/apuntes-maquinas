@@ -9,13 +9,36 @@
 
 \section{Resistores}
 
+
+
 \subsection{En serie}
 
-Dos resistores en serie, llamados $R_1$ y $R_2$, pueden reemplazarse por la resistencia equivalente $R_{eq}$, que se calcula usando la fórmula:
+Si tenemos dos resistores en serie, llamados $R_1$ y $R_2$, entre los nodos A y B, podemos diagramarlos así:
+
+\begin{circuitikz}
+\draw
+  (0,0) node[left]{A}
+  to[short, o-] (1,0)
+  to[R, l=$R_1$] (3,0)
+  to[R, l=$R_2$] (5,0)
+  to[short, -o] (6,0) node[right]{B};
+\end{circuitikz}
+
+Podemos reemplazar estos dos resistores por uno equivalente $R_{eq}$, que se calcula usando la fórmula:
 
 \begin{equation}
 R_{eq} = R_1 + R_2
 \end{equation}
+
+y diagramado así:
+
+\begin{circuitikz}
+\draw
+  (0,0) node[left]{A}
+  to[short, o-] (1,0)
+  to[R, l=$R_eq$] (3,0)
+  to[short, -o] (6,0) node[right]{B};
+\end{circuitikz}
 
 
 \subsection{En paralelo}
