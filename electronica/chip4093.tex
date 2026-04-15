@@ -1,0 +1,146 @@
+\documentclass[../principal.tex]{subfiles}
+\graphicspath{{\subfix{../imagenes/}}}
+
+\begin{document}
+
+\ifSubfilesClassLoaded{
+   \chapter{Circuitos integrados}
+}{}
+
+\section{Chip 4093}
+
+El 4093 contiene 4 compuertas lógicas NAND de 2 entradas con activador de Schmitt.
+
+Lo usaremos para hacer osciladores de onda cuadrada.
+
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+  % cuerpo del chip
+  \node[draw, thick, minimum width=3cm, minimum height=8cm] (chip) at (0,0) {\rotatebox{-90}{\large 4093}};
+  
+  % patitas izquierda
+  \foreach \y/\text in {
+    3.0/{01 $A_{1}$},
+    2.0/{02 $B_{1}$},
+    1.0/{03 $Q_{1}$},
+    0.0/{04 $Q_{2}$},
+   -1.0/{05 $A_{2}$},
+   -2.0/{06 $B_{2}$},
+   -3.0/{07 GND},
+  }{
+    % patita
+    \draw ($(chip.west)+(0,\y)$) -- ++(-0.4,0);
+    % etiqueta
+    \node[left] at ($(chip.west)+(-0.4,\y)$) {\text};
+  }
+
+  % patitas derecha
+  \foreach \y/\text in {
+    3.0/{14 $V_{CC}$},
+    2.0/{13 $B_{4}$},
+    1.0/{12 $A_{4}$},
+    0.0/{11 $Q_{4}$},
+   -1.0/{10 $Q_{3}$},
+   -2.0/{09 $B_{3}$},
+   -3.0/{08 $A_{3}$},
+  }{
+    % patita
+    \draw ($(chip.east)+(0,\y)$) -- ++(0.4,0);
+    % etiqueta
+    \node[right] at ($(chip.east)+(0.4,\y)$) {\text};
+  }
+
+  % puntito en patita 1
+  \fill ($(chip.north west)+(0.3,-0.3)$) circle (2pt);
+\end{circuitikz}
+\caption{Integrado 4093}
+\end{figure}
+
+\subsection{Patitas}
+
+El chip 4093 tiene 14 patitas.
+
+Dos patitas son para alimentación: 14 para $V_{CC}$ y 07 para GND.
+
+\begin{itemize}
+    \item 01: $A_{1}$
+    \item 02: $B_{1}$
+    \item 03: $Q_{1}$
+    \item 04: $Q_{2}$
+    \item 05: $A_{2}$
+    \item 06: $B_{2}$
+    \item 07: GND
+    \item 08: $A_{3}$
+    \item 09: $B_{3}$
+    \item 10: $Q_{3}$
+    \item 11: $Q_{4}$
+    \item 12: $A_{4}$
+    \item 13: $B_{4}$
+    \item 14: $V_{CC}$
+\end{itemize}
+
+\subsection{Secuenciador de 4 pasos}
+
+Para usar el 4017 para contar 4 pasos necesitamos cumplir con los siguientes criterios:
+
+\begin{itemize}
+    \item Alimentar el circuito integrado
+    \item Hacer que cuente 4 pasos (de 0 a 3), y cuando llegue a 4 vuelva a 0.
+    \item Hacer que responda al pulso de un reloj
+\end{itemize}
+
+Como las salidas de la secuencia van de 0 a 9, respetaremos esta convención de partir contando desde 0.
+
+Como estamos construyendo un secuenciador de 4 pasos, queremos que el circuito cuente 0, 1, 2, 3, y cuando llegue a 4 vuelva a 0.
+
+\subsubsection{Alimentación}
+
+\begin{enumerate}
+    \item Patita 16 a $V_{CC}$
+    \item Patita 08 a GND
+\end{enumerate}
+
+\subsubsection{Retroalimentación}
+
+Como la patita 10 es el paso 4, la conectamos a la patita 15 de reseteo, para que cuando llegue a 4, vuelva a 0.
+
+\begin{enumerate}
+    \item Patita 10 a patita 15
+\end{enumerate}
+
+\subsubsection{Entradas de reloj}
+
+La patita 14 recibirá la entrada de reloj, mientras que la patita 13 es la que habilita el circuito para que siga al reloj.
+
+\begin{enumerate}
+    \item Patita 13 a GND a través de un resistor de 100 k$\Omega$ para habilitar el circuito.
+    \item Patita 14 recibe la conexión de un reloj, por ejemplo, la salida de un 555 en configuración astable.
+\end{enumerate}
+
+\subsubsection{Salidas}
+
+\begin{enumerate}
+    \item Patita 02 - paso 1
+    \item Patita 03 - paso 0
+    \item Patita 04 - paso 2
+    \item Patita 07 - paso 3
+
+\end{enumerate}
+
+\subsubsection{Patitas sin conexión}
+
+\begin{enumerate}
+    \item Patita 01
+    \item Patita 05
+    \item Patita 06
+    \item Patita 09
+    \item Patita 11
+    \item Patita 12
+\end{enumerate}
+
+
+\newpage
+
+\end{document}
+
