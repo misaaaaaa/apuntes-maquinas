@@ -9,25 +9,93 @@
 
 \section{Capacitores}
 
+
 \subsection{En serie}
 
-Dos capacitores en serie, llamados $C_1$ y $C_2$, pueden reemplazarse por el capacitor equivalente $C_{eq}$, que se calcula usando la fórmula:
+Si tenemos dos capacitores en serie, llamados $C_1$ y $C_2$, entre los nodos A y B, podemos diagramarlos así:
+
+\begin{circuitikz}
+\draw
+  (0,0) node[left]{A}
+  to[short, o-] (1,0)
+  to[C, l=$C_1$] (3,0)
+  to[C, l=$C_2$] (5,0)
+  to[short, -o] (6,0) node[right]{B};
+\end{circuitikz}
+
+Podemos reemplazar estos dos capacitores por uno equivalente $C_{eq}$, que se calcula usando la fórmula:
 
 \begin{equation}
-C_{eq} = \frac{C_1 \cdot C_2}{C_1 + C_2}
+\frac{1}{C_{eq}} = \frac{1}{C_1} + \frac{1}{C_2}
 \end{equation}
 
+o usando la fórmula equivalente:
+
+\begin{equation}
+\frac{1}{C_{eq}} = \frac{1}{C_1} + \frac{1}{C_2}
+\end{equation}
+
+y diagramado así:
+
+\begin{circuitikz}
+\draw
+  (0,0) node[left]{A}
+  to[short, o-] (2,0)
+  to[C, l=$C_{eq}$] (4,0)
+  to[short, -o] (6,0) node[right]{B};
+\end{circuitikz}
 
 \subsection{En paralelo}
 
-Dos capacitores en paralelo, llamados $C_1$ y $C_2$, pueden reemplazarse por el capacitor equivalente $C_{eq}$, que se calcula usando la fórmula:
+Si tenemos dos capacitores en paralelo, llamados $C_1$ y $C_2$, entre los nodos A y B, podemos diagramarlos así:
 
+\begin{circuitikz}
+% nodos A y B
+\coordinate (A) at (0,0);
+\coordinate (B) at (6,0);
+
+% dibujar etiquetas de los nodos
+\draw (A) node[left]{A};
+\draw (B) node[right]{B};
+
+% puntos de conexion
+\coordinate (izq) at (1,0);
+\coordinate (der) at (5,0);
+
+% rama arriba
+\draw (A) to [short, o-] (izq)
+      (izq) to[short] ++(0,1.0)
+      to[C, l=$C_1$] ++(4,0)
+      to[short] (der)
+      (der) to [short, -o] (B);
+
+% rama abajo
+\draw (A) to [short, o-] (izq)
+      (izq) to[short] ++(0,-1.0)
+      to[C, l=$C_2$] ++(4,0)
+      to[short] (der)
+      (der) to [short, -o] (B);
+
+\end{circuitikz}
+
+Podemos reemplazar estos dos capacitores por uno equivalente $C_{eq}$, que se calcula usando la fórmula:
 
 \begin{equation}
 C_{eq} = C_1 + C_2
 \end{equation}
 
+y diagramado así:
+
+\begin{circuitikz}
+\draw
+  (0,0) node[left]{A}
+  to[short, o-] (2,0)
+  to[C, l=$C_{eq}$] (4,0)
+  to[short, -o] (6,0) node[right]{B};
+\end{circuitikz}
+
 \newpage
 
 \end{document}
+
 

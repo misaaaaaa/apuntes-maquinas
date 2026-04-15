@@ -41,20 +41,65 @@ y diagramado así:
 \begin{circuitikz}
 \draw
   (0,0) node[left]{A}
-  to[short, o-] (1,0)
-  to[R, l=$R_eq$] (3,0)
+  to[short, o-] (2,0)
+  to[R, l=$R_{eq}$] (4,0)
   to[short, -o] (6,0) node[right]{B};
 \end{circuitikz}
 
-
 \subsection{En paralelo}
 
-Dos resistores en paralelo, llamados $R_1$ y $R_2$, pueden reemplazarse por la resistencia equivalente $R_{eq}$, que se calcula usando la fórmula:
+Si tenemos dos resistores en paralelo, llamados $R_1$ y $R_2$, entre los nodos A y B, podemos diagramarlos así:
 
+\begin{circuitikz}
+% nodos A y B
+\coordinate (A) at (0,0);
+\coordinate (B) at (6,0);
+
+% dibujar etiquetas de los nodos
+\draw (A) node[left]{A};
+\draw (B) node[right]{B};
+
+% puntos de conexion
+\coordinate (izq) at (1,0);
+\coordinate (der) at (5,0);
+
+% rama arriba
+\draw (A) to [short, o-] (izq)
+      (izq) to[short] ++(0,1.0)
+      to[R, l=$R_1$] ++(4,0)
+      to[short] (der)
+      (der) to [short, -o] (B);
+
+% rama abajo
+\draw (A) to [short, o-] (izq)
+      (izq) to[short] ++(0,-1.0)
+      to[R, l=$R_2$] ++(4,0)
+      to[short] (der)
+      (der) to [short, -o] (B);
+
+\end{circuitikz}
+
+Podemos reemplazar estos dos resistores por uno equivalente $R_{eq}$, que se calcula usando la fórmula:
 
 \begin{equation}
 R_{eq} = \frac{R_1 \cdot R_2}{R_1 + R_2}
 \end{equation}
+
+o usando la fórmula equivalente:
+
+\begin{equation}
+\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2}
+\end{equation}
+
+y diagramado así:
+
+\begin{circuitikz}
+\draw
+  (0,0) node[left]{A}
+  to[short, o-] (2,0)
+  to[R, l=$R_{eq}$] (4,0)
+  to[short, -o] (6,0) node[right]{B};
+\end{circuitikz}
 
 \newpage
 
