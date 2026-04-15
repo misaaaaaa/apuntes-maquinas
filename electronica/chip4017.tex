@@ -13,6 +13,52 @@ El 4017 es un contador de décadas.
 
 Lo usaremos para secuenciar.
 
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+  % cuerpo del chip
+  \node[draw, thick, minimum width=3cm, minimum height=8cm] (chip) at (0,0) {\rotatebox{-90}{\large 4017}};
+  
+  % patitas izquierda
+  \foreach \y/\text in {
+    3.5/{01 $Q_{5}$},
+    2.5/{02 $Q_{1}$},
+    1.5/{03 $Q_{0}$},
+    0.5/{04 $Q_{2}$},
+   -0.5/{05 $Q_{6}$},
+   -1.5/{06 $Q_{7}$},
+   -2.5/{07 $Q_{3}$},
+   -3.5/{08 GND},
+  }{
+    % patita
+    \draw ($(chip.west)+(0,\y)$) -- ++(-0.4,0);
+    % etiqueta
+    \node[left] at ($(chip.west)+(-0.4,\y)$) {\text};
+  }
+
+  % patitas derecha
+  \foreach \y/\text in {
+    3.5/{16 $V_{CC}$},
+    2.5/{15 Reset},
+    1.5/{14 Clock},
+    0.5/{13 Enable},
+   -0.5/{12 CARRY},
+   -1.5/{11 $Q_{9}$},
+   -2.5/{10 $Q_{4}$},
+   -3.5/{09 $Q_{8}$},
+  }{
+    % patita
+    \draw ($(chip.east)+(0,\y)$) -- ++(0.4,0);
+    % etiqueta
+    \node[right] at ($(chip.east)+(0.4,\y)$) {\text};
+  }
+
+  % puntito en patita 1
+  \fill ($(chip.north west)+(0.3,-0.3)$) circle (2pt);
+\end{circuitikz}
+\caption{Integrado 4017}
+\end{figure}
+
 \subsection{Patitas}
 
 El chip 4017 tiene 16 patitas.
@@ -36,20 +82,64 @@ El chip 4017 tiene 16 patitas.
     \item 16: $V_{CC}$
 \end{itemize}
 
-\subsection{Orden de conexiones}
+\subsection{Secuenciador de 4 pasos}
 
-Para usar el 4017 recomendamos seguir este orden de conexiones.
+Para usar el 4017 para contar 4 pasos necesitamos cumplir con los siguientes criterios:
+
+\begin{itemize}
+    \item Alimentar el circuito integrado
+    \item Hacer que cuente 4 pasos (de 0 a 3), y cuando llegue a 4 vuelva a 0.
+    \item Hacer que responda al pulso de un reloj
+\end{itemize}
+
+Como las salidas de la secuencia van de 0 a 9, respetaremos esta convención de partir contando desde 0.
+
+Como estamos construyendo un secuenciador de 4 pasos, queremos que el circuito cuente 0, 1, 2, 3, y cuando llegue a 4 vuelva a 0.
 
 \subsubsection{Alimentación}
 
 \begin{enumerate}
     \item Patita 16 a $V_{CC}$
-    \item Patita 8 a GND
+    \item Patita 08 a GND
 \end{enumerate}
 
+\subsubsection{Retroalimentación}
 
+Como la patita 10 es el paso 4, la conectamos a la patita 15 de reseteo, para que cuando llegue a 4, vuelva a 0.
 
-\subsubsection{}
+\begin{enumerate}
+    \item Patita 10 a patita 15
+\end{enumerate}
+
+\subsubsection{Entradas de reloj}
+
+La patita 14 recibirá la entrada de reloj, mientras que la patita 13 es la que habilita el circuito para que siga al reloj.
+
+\begin{enumerate}
+    \item Patita 13 a GND a través de un resistor de 100 k$\Omega$ para habilitar el circuito.
+    \item Patita 14 recibe la conexión de un reloj, por ejemplo, la salida de un 555 en configuración astable.
+\end{enumerate}
+
+\subsubsection{Salidas}
+
+\begin{enumerate}
+    \item Patita 02 - paso 1
+    \item Patita 03 - paso 0
+    \item Patita 04 - paso 2
+    \item Patita 07 - paso 3
+
+\end{enumerate}
+
+\subsubsection{Patitas sin conexión}
+
+\begin{enumerate}
+    \item Patita 01
+    \item Patita 05
+    \item Patita 06
+    \item Patita 09
+    \item Patita 11
+    \item Patita 12
+\end{enumerate}
 
 
 \newpage

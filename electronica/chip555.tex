@@ -17,35 +17,34 @@ El chip 555 es un circuito integrado que se utiliza para generar señales de tem
   % cuerpo del chip
   \node[draw, thick, minimum width=3cm, minimum height=5cm] (chip) at (0,0) {\rotatebox{-90}{\large 555}};
   
-  % --- PINES IZQUIERDA ---
+  % patitas izquierda
   \foreach \y/\text in {
     1.5/{01 GND},
     0.5/{02 TRIG},
    -0.5/{03 OUT},
    -1.5/{04 RESET}
   }{
-    % stub
+    % patita
     \draw ($(chip.west)+(0,\y)$) -- ++(-0.4,0);
-    % label
+    % etiqueta
     \node[left] at ($(chip.west)+(-0.4,\y)$) {\text};
   }
 
-  % --- PINES DERECHA ---
+  % patitas derecha
   \foreach \y/\text in {
     1.5/{08 VCC},
     0.5/{07 DIS},
    -0.5/{06 THR},
    -1.5/{05 CTRL}
   }{
-    % stub
+    % patita
     \draw ($(chip.east)+(0,\y)$) -- ++(0.4,0);
-    % label
+    % etiqueta
     \node[right] at ($(chip.east)+(0.4,\y)$) {\text};
   }
 
-  % --- INDICADOR PIN 1 (puntito) ---
+  % puntito en patita 1
   \fill ($(chip.north west)+(0.3,-0.3)$) circle (2pt);
-
 \end{circuitikz}
 \caption{Integrado 555}
 \end{figure}
