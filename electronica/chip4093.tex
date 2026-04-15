@@ -63,6 +63,8 @@ El chip 4093 tiene 14 patitas.
 
 Dos patitas son para alimentación: 14 para $V_{CC}$ y 07 para GND.
 
+Las otras patitas corresponden a entradas y salidas de las 4 compuertas NAND, donde cada compuerta tiene 2 entradas (A y B) y una salida (Q), y están numeradas de 1 a 4.
+
 \begin{itemize}
     \item 01: $A_{1}$
     \item 02: $B_{1}$
@@ -80,67 +82,74 @@ Dos patitas son para alimentación: 14 para $V_{CC}$ y 07 para GND.
     \item 14: $V_{CC}$
 \end{itemize}
 
-\subsection{Secuenciador de 4 pasos}
+\subsection{Osciladores de onda cuadrada}
 
-Para usar el 4017 para contar 4 pasos necesitamos cumplir con los siguientes criterios:
+Para usar el 4093 como osciladores, conectaremos la alimentación del circuito integrado, y luego cada compuerta de un modo que sea un oscilador de onda cuadrada.
 
-\begin{itemize}
-    \item Alimentar el circuito integrado
-    \item Hacer que cuente 4 pasos (de 0 a 3), y cuando llegue a 4 vuelva a 0.
-    \item Hacer que responda al pulso de un reloj
-\end{itemize}
+La tabla de verdad de cada compuerta NAND es la siguiente:
 
-Como las salidas de la secuencia van de 0 a 9, respetaremos esta convención de partir contando desde 0.
+\begin{center}
+\begin{tabular}{cc|c}
+$A$ & $B$ & $Q$ \\
+\hline
+0 & 0 & 1 \\
+0 & 1 & 1 \\
+1 & 0 & 1 \\
+1 & 1 & 0 \\
+\end{tabular}
+\end{center}
 
-Como estamos construyendo un secuenciador de 4 pasos, queremos que el circuito cuente 0, 1, 2, 3, y cuando llegue a 4 vuelva a 0.
+Si nos concentramos en la entrada A, vemos que cuando es 0, la salida Q siempre vale 1, lo que no nos sirve para nuestra intención de oscilar.
+
+En cambio, cuando la entrada A es 1, la salida Q es el inverso de la entrada B, lo que sí permite la oscilación. 
+
+Usaremos entonces una entrada A fija en $V_{CC}$ cuando queremos que la compuerta oscile siempre, o una entrada A conectada a un secuenciador que permita la oscilación solamente cuando esta entrada sea $V_{CC}$.
+
 
 \subsubsection{Alimentación}
 
 \begin{enumerate}
-    \item Patita 16 a $V_{CC}$
-    \item Patita 08 a GND
+    \item Patita 14 a $V_{CC}$
+    \item Patita 07 a GND
 \end{enumerate}
 
-\subsubsection{Retroalimentación}
-
-Como la patita 10 es el paso 4, la conectamos a la patita 15 de reseteo, para que cuando llegue a 4, vuelva a 0.
+\subsubsection{Entradas}
 
 \begin{enumerate}
-    \item Patita 10 a patita 15
-\end{enumerate}
-
-\subsubsection{Entradas de reloj}
-
-La patita 14 recibirá la entrada de reloj, mientras que la patita 13 es la que habilita el circuito para que siga al reloj.
-
-\begin{enumerate}
-    \item Patita 13 a GND a través de un resistor de 100 k$\Omega$ para habilitar el circuito.
-    \item Patita 14 recibe la conexión de un reloj, por ejemplo, la salida de un 555 en configuración astable.
+    \item Patita 01 a $V_{CC}$ o a un secuenciador que controle compuerta 1
+    \item Patita 05 a $V_{CC}$ o a un secuenciador que controle compuerta 2
+    \item Patita 08 a $V_{CC}$ o a un secuenciador que controle compuerta 3
+    \item Patita 12 a $V_{CC}$ o a un secuenciador que controle compuerta 4
 \end{enumerate}
 
 \subsubsection{Salidas}
 
 \begin{enumerate}
-    \item Patita 02 - paso 1
-    \item Patita 03 - paso 0
-    \item Patita 04 - paso 2
-    \item Patita 07 - paso 3
-
+    \item Patita 03 - salida de la compuerta 1
+    \item Patita 04 - salida de la compuerta 2
+    \item Patita 10 - salida de la compuerta 3
+    \item Patita 11 - salida de la compuerta 4
 \end{enumerate}
 
-\subsubsection{Patitas sin conexión}
+\subsubsection{Retroalimentación}
+
+Conectaremos las entradas B de cada compuerta a su salida Q correspondiente, a través de un circuito RC.
+
+Para lograrlo, cada entrada B se conecta a tierra a través de un capacitor, y también se conecta a su salida Q a través de un potenciómetro.
+
+Los valores de los capacitores y los potenciómetros son los que determinan la frecuencia de oscilación de cada compuerta NAND.
 
 \begin{enumerate}
-    \item Patita 01
-    \item Patita 05
-    \item Patita 06
-    \item Patita 09
-    \item Patita 11
-    \item Patita 12
+    \item Patita 02 conectada a tierra a través de un capacitor de 1 $\mu F$
+    \item Patita 06 conectada a tierra a través de un capacitor de 1 $\mu F$
+    \item Patita 09 conectada a tierra a través de un capacitor de 1 $\mu F$
+    \item Patita 13 conectada a tierra a través de un capacitor de 1 $\mu F$
+    \item Patita 02 conectada a patita 03 a través de un potenciómetro de 100 k$\Omega$
+    \item Patita 06 conectada a patita 04 a través de un potenciómetro de 100 k$\Omega$
+    \item Patita 09 conectada a patita 10 a través de un potenciómetro de 100 k$\Omega$
+    \item Patita 13 conectada a patita 11 a través de un potenciómetro de 100 k$\Omega$
 \end{enumerate}
-
 
 \newpage
 
 \end{document}
-
