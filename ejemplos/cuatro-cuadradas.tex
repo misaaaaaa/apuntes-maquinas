@@ -21,60 +21,193 @@ A grandes ragos tendremos los siguientes módulos:
     \item Parlante
 \end{enumerate}
 
+Como diagrama de bloques proponemos el siguiente:
+
+\begin{tikzpicture}[node distance=2cm]
+
+\node (reloj) [process] {Reloj};
+\node (secuenciador) [process, below of=reloj] {Secuenciador};
+\node (osciladores) [process, below of=secuenciador] {Osciladores};
+\node (amplificador) [process, below of=osciladores] {Amplificador};
+\node (parlante) [process, below of=amplificador] {Parlante};
+
+
+
+% \node (pro2b) [process, right of=dec1, xshift=2cm] {Process 2b};
+% \node (out1) [io, below of=pro2a] {Output};
+% \node (stop) [startstop, below of=out1] {Stop};
+
+\draw[arrow, dashed] (reloj) -- node[left]{tierra} (secuenciador);
+\draw[arrow] (reloj) -- node[right]{señal de reloj} (secuenciador);
+\draw [arrow] (secuenciador) -- (osciladores);
+\draw [arrow] (osciladores) -- (amplificador);
+\draw [arrow] (amplificador) -- (parlante);
+
+\end{tikzpicture}
+
 \section{Reloj}
 
 Para el módulo de reloj proponemos el uso del chip 555 en modo astable, explicado en \ref{sec:chip555}.
+
+
+\begin{circuitikz}
+    \draw (0,0) node[draw, minimum height=2.0cm, minimum width=1.0cm] (box) {Reloj};
+    \draw (box.north) -- ++(0.0, 0.2) node[anchor=south] {$V_{CC}$};
+    \draw (box.south) -- ++(0.0, -0.2) node[anchor=north] {Tierra};
+    \draw (box.east) |- ++(0.4,0.2) node[anchor=west] {Señal de reloj};
+    \draw (box.east) |- ++(0.4,-0.2) node[anchor=west] {Tierra};
+\end{circuitikz}
+
 
 \subsection{Entradas}
 
 Las entradas al reloj son 2:
 
 \begin{enumerate}
-    \item Voltaje de alimentación
     \item Tierra
+    \item Voltaje de alimentación
 \end{enumerate}
 
 \subsection{Salidas}
 
-Las salidas al reloj es 1: la señal de reloj, una onda cuadrada que alterna entre 0V y el voltaje de alimentación.
+Las salidas al reloj son 2: la señal de reloj, una onda cuadrada que alterna entre 0V y el voltaje de alimentación.
+
+\begin{enumerate}
+    \item Tierra
+    \item Señal de reloj
+\end{enumerate}
+
+\newpage
 
 \section{Secuenciador}
 
 Para el módulo de secuenciador proponemos el uso del chip 4017, explicado en \ref{sec:chip4017}.
+
+
+\begin{circuitikz}
+    \draw (0,0) node[draw, minimum height=2.0cm, minimum width=1.0cm] (box) {Secuenciador};
+    \draw (box.north) -- ++(0,0.2) node[anchor=south] {$V_{CC}$};
+    \draw (box.south)   -- ++(0,-0.2) node[anchor=north] {Tierra};
+    \draw (box.west) -| ++(-0.2,0) node[anchor=east] {Entrada de reloj};
+    \draw (box.east) |- ++(0.4,+0.8) node[anchor=west] {Señal de paso 1};
+    \draw (box.east) |- ++(0.4,+0.4) node[anchor=west] {Señal de paso 2};
+    \draw (box.east) |- ++(0.4,+0.0) node[anchor=west] {Señal de paso 3};
+    \draw (box.east) |- ++(0.4,-0.4) node[anchor=west] {Señal de paso 4};
+    \draw (box.east) |- ++(0.4,-0.8) node[anchor=west] {Tierra};
+\end{circuitikz}
+
 
 \subsection{Entradas}
 
 Las entradas al secuenciador son 3
 
 \begin{enumerate}
-    \item Señal de reloj
-    \item Voltaje de alimentación
     \item Tierra
+    \item Voltaje de alimentación
+    \item Señal de reloj
 \end{enumerate}
 
 \subsection{Salidas}
 
-Las salidas al secuenciador son 4: cada 1 corresponde a un paso del secuenciador, alternando entre 0V y el voltaje de alimentación.
+Las salidas al secuenciador son 5: tierra, y 1 por cada paso del secuenciador, alternando entre 0V y el voltaje de alimentación.
 
 \begin{enumerate}
+    \item Tierra
     \item Paso 1
     \item Paso 2
     \item Paso 3
     \item Paso 4
 \end{enumerate}
 
+\newpage
+
 \section{Osciladores}
 
 Para el módulo de osciladores proponemos el uso del chip 4093, explicado en \ref{sec:chip4093}.
 
+\begin{circuitikz}
+    \draw (0,0) node[draw, minimum height=2.0cm, minimum width=1.0cm] (box) {Osciladores};
+    \draw (box.north) -- ++(0,0.2) node[anchor=south] {$V_{CC}$};
+    \draw (box.south)   -- ++(0,-0.2) node[anchor=north] {Tierra};
+    \draw (box.east) |- ++(0.4,+0.8) node[anchor=west] {Señal de oscilador 1};
+    \draw (box.east) |- ++(0.4,+0.4) node[anchor=west] {Señal de oscilador 2};
+    \draw (box.east) |- ++(0.4,+0.0) node[anchor=west] {Señal de oscilador 3};
+    \draw (box.east) |- ++(0.4,-0.4) node[anchor=west] {Señal de oscilador 4};
+    \draw (box.east) |- ++(0.4,-0.8) node[anchor=west] {Tierra};
+\end{circuitikz}
+
 \subsection{Entradas}
+
+
+\begin{enumerate}
+    \item Tierra
+    \item Voltaje de alimentación
+    \item Señal de paso 1
+    \item Señal de paso 2
+    \item Señal de paso 3
+    \item Señal de paso 4
+\end{enumerate}
 
 \subsection{Salidas}
 
-\section{Amplificador}
+\begin{enumerate}
+    \item Tierra
+    \item Señal de oscilador 1
+    \item Señal de oscilador 2
+    \item Señal de oscilador 3
+    \item Señal de oscilador 4
+\end{enumerate}
+
+\newpage
+
+\section{Mezclador y amplificador}
+
+Para el módulo de mezclador y amplificador proponemos el uso del chip 386.
+
+\subsection{Entradas}
+
+\begin{enumerate}
+    \item Tierra
+    \item Voltaje de alimentación
+    \item Señal de audio 1
+    \item Señal de audio 2
+    \item Señal de audio 3
+    \item Señal de audio 4
+\end{enumerate}
+
+\subsection{Salidas}
+
+\begin{enumerate}
+    \item Tierra
+    \item Señal de audio mono amplificada
+\end{enumerate}
+
+\newpage
 
 \section{Parlante}
 
+Para parlante proponemos el uso de un parlante de 8 $\Omega$.
+
+\begin{circuitikz}
+    \draw (0,0) node[draw, minimum height=2.0cm, minimum width=1.0cm] (box) {Parlante};
+    \draw (box.north) -- ++(0,0.2) node[anchor=south] {$V_{CC}$};
+    \draw (box.south)   -- ++(0,-0.2) node[anchor=north] {Tierra};
+    \draw (box.west) -| ++(-0.2,0) node[anchor=east] {Entrada de audio};
+    \draw (box.east) |- ++(0.4,0) node[anchor=west] {Sonido};
+\end{circuitikz}
+
+\subsection{Entradas}
+
+\begin{enumerate}
+    \item Tierra
+    \item Señal de audio monófonica
+\end{enumerate}
+
+\subsection{Salidas}
+
+\begin{enumerate}
+    \item Sonido
+\end{enumerate}
 
 \newpage
 
