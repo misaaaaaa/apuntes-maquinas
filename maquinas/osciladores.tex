@@ -69,7 +69,6 @@ La podemos describir con tres parámetros:
 
 La onda triangular tiene una subida y una bajada con la misma pendiente.
 
-
 \begin{tikzpicture}
 \begin{axis}[
     clip=false,
@@ -110,6 +109,44 @@ La onda triangular tiene una subida y una bajada con la misma pendiente.
 
 \subsection{Onda diente de sierra}
 
+\begin{tikzpicture}
+\begin{axis}[
+    clip=false,
+    xmin=0, xmax=4,
+    ymin=-1.5, ymax=1.5,
+    axis lines=middle,
+    xlabel={$t$ (s)},
+    ylabel={$y(t)$},
+    xtick={0,1,2,3,4},
+    ytick={-1,0,1},
+]
+
+\addplot[
+    domain=0:4,
+    samples=500,
+    green,
+    thick
+]
+{2*(x/2 - floor(x/2)) - 1};
+
+% Amplitude lines
+\draw[dashed] (axis cs:0,1) -- (axis cs:4,1);
+\draw[dashed] (axis cs:0,-1) -- (axis cs:4,-1);
+
+% Amplitude labels
+\node[right] at (axis cs:4,1) {$A$};
+\node[right] at (axis cs:4,-1) {$-A$};
+
+% Period arrow
+\draw[<->] (axis cs:0,-1.3) -- (axis cs:2,-1.3);
+\node at (axis cs:1,-1.45) {$T$};
+
+% Optional: function label
+% \node at (axis cs:3.2,0.8) {$y(t)=A\sin\left(\frac{2\pi}{T}t\right)$};
+
+\end{axis}
+\end{tikzpicture}
+
 \subsection{Onda rectangular}
 
 \subsection{Onda cuadrada}
@@ -117,6 +154,45 @@ La onda triangular tiene una subida y una bajada con la misma pendiente.
 Todas las ondas cuadradas son ondas rectangulares, pero no todas las ondas rectangulares son ondas cuadradas.
 
 Estas ondas son utopías, ya que es imposible generar una onda cuadrada perfecta que cambia de estado de forma instantánea, pero para fines perceptuales podemos aproximarnos a esta forma de onda.
+
+
+\begin{tikzpicture}
+\begin{axis}[
+    clip=false,
+    xmin=0, xmax=4,
+    ymin=-1.5, ymax=1.5,
+    axis lines=middle,
+    xlabel={$t$ (s)},
+    ylabel={$y(t)$},
+    xtick={0,1,2,3,4},
+    ytick={-1,0,1},
+]
+
+\addplot[
+    domain=0:4,
+    samples=500,
+    green,
+    thick
+]
+{sign(sin(deg(pi*x)))};
+
+% Amplitude lines
+\draw[dashed] (axis cs:0,1) -- (axis cs:4,1);
+\draw[dashed] (axis cs:0,-1) -- (axis cs:4,-1);
+
+% Amplitude labels
+\node[right] at (axis cs:4,1) {$A$};
+\node[right] at (axis cs:4,-1) {$-A$};
+
+% Period arrow
+\draw[<->] (axis cs:0,-1.3) -- (axis cs:2,-1.3);
+\node at (axis cs:1,-1.45) {$T$};
+
+% Optional: function label
+% \node at (axis cs:3.2,0.8) {$y(t)=A\sin\left(\frac{2\pi}{T}t\right)$};
+
+\end{axis}
+\end{tikzpicture}
 
 \section{Osciladores controlados por voltaje}
 
