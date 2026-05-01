@@ -25,3 +25,7 @@
 *.slo
 *.sls
 *.ist
+*.bcf
+*.run.xml
+*.bbl
+*.blg
