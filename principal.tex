@@ -1,9 +1,5 @@
 \documentclass[10pt, openany]{book}
 
-\usepackage{csquotes}
-\usepackage{biblatex}
-\addbibresource{biblio.bib}
-
 \usepackage{xcolor}
 
 \definecolor{linkgray}{gray}{0.3}
@@ -14,6 +10,10 @@
   citecolor=linkgray,
   urlcolor=linkgray
 ]{hyperref}
+
+\usepackage{csquotes}
+\usepackage{biblatex}
+\addbibresource{biblio.bib}
 
 \usepackage{glossaries}
 \makeglossaries
@@ -161,5 +161,7 @@ fill=green!30]
 \subfile{ejemplos/cuatro-cuadradas}
 
 \printglossaries
+
+\printbibliography
 
 \end{document}
